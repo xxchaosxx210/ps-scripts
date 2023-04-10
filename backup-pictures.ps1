@@ -1,3 +1,9 @@
+<#
+    .DESCRIPTION
+    Example showing exception handling, loading .NET libraries
+    Copies all pictures in the pictures home path and compresses them to a zip file
+#>
+
 function Get-Images-From-Path {
     <#
     .PARAMETER Path
