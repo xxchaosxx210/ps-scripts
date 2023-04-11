@@ -58,21 +58,19 @@ function Copy-Pictures-To-Backup-Path {
         [string]$BackPath,
         [string[]]$SourceFilePaths
     )
-    # keep track of the amount of files copied
-    $counter = 0
-    foreach ($sourceFilePath in $SourceFilePaths) {
-        # split the filename from the path and append to the back path
-        $fileName = Split-Path $sourceFilePath -Leaf -Resolve
+    # using the foreach-object call but standard foreach would work too
+    [int]$counter = 0
+    $SourceFilePaths | ForEach-Object -Process {
+        $fileName = Split-Path $_ -Leaf -Resolve
         $backupFilePath = Join-Path $BackPath $fileName
-        # copy the picture into the backup directory
         try {
-            Copy-Item $sourceFilePath -Destination $backupFilePath
+            Copy-Item $_ -Destination $backupFilePath
             $counter++
         }
         catch {
             Write-Error "Error Copying File: $_"
         }
-    }
+    } -End $null
     return $counter
 }
 
